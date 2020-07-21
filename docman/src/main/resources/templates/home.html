@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" th:href="@{/public/favicon.ico}" type="image/x-icon">
+    <link rel="stylesheet" th:href="@{/plugin/bootstrap/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/plugin/bootstrap-table/bootstrap-table.css}">
+    <link rel="stylesheet" th:href="@{/public/css/demo.css}">
+    <style type="text/css">
+
+    </style>
+    <title>DocMan</title>
+
+</head>
+<body style="background-image: url(public/img/bg.jpg)">
+<div class="loader"></div>
+<header>
+    <div class="row">
+        <div class="col float-left">
+            <h3> 枫林文档管理系统</h3>
+        </div>
+        <nav class="col">
+            <ul class="nav float-right">
+                <li class="nav-item">
+                    <a class="nav-link" href="login">登录</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">帮助</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<div class="container">
+    <div style="margin-top: 1.5rem;">
+        <div class="row">
+            <form class="form-group align-content-center" style="width: 100%;">
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-5">
+                        <input class="form-control rounded-pill" type="text" id="keyword" placeholder="请输入名称或关键字"/>
+                    </div>
+                    <input type="button" class="btn btn-success col-md-1 rounded-pill" onclick="search()" value="搜索"/>
+                </div>
+            </form>
+            <table class="table table-sm" id="table" style="width: 70rem;color: white;margin-top: 1rem"></table>
+        </div>
+    </div>
+</div>
+
+<footer class="footer" style="position: fixed;bottom: 0;width: -webkit-fill-available ;background-color: #000">
+    <div class="row align-content-center" style="text-align: center">
+        <div class="col" style="padding: 0.5rem;color: white">
+            <h5>&copy;DocMan &laquo;Fenglin-2020-03-09&raquo;</h5>
+        </div>
+    </div>
+</footer>
+<script type="text/javascript" th:src="@{/plugin/jquery/jquery.js}"></script>
+<script type="text/javascript" th:src="@{/plugin/bootstrap/js/bootstrap.js}"></script>
+<script type="text/javascript" th:src="@{/plugin/bootstrap-table/bootstrap-table.js}"></script>
+<script type="text/javascript" th:src="@{/plugin/bootstrap-table/bootstrap-table-locale-all.js}"></script>
+<script type="text/javascript" th:src="@{/public/js/home.js}"></script>
+</body>
+</html>

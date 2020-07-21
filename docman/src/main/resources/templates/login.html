@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" th:href="@{/public/favicon.ico}" type="image/x-icon">
+    <link rel="stylesheet" th:href="@{/plugin/bootstrap/css/bootstrap.css}">
+
+    <style>
+        .content {
+            width: 450px;
+            margin-top: 13%;
+            margin-left: 30%;
+            border: 1px solid #1fa1a566;
+            background-color: #1fa1a566;
+            border-radius: 5px;
+            padding: 0.5rem 1.5rem
+        }
+
+        .btn-primary {
+            margin-left: 5px;
+            margin-left: 5px;
+        }
+
+        .label {
+            color: #e2e3e5;
+        }
+
+        .row {
+            margin-top: 15px;
+        }
+    </style>
+
+    <meta charset="UTF-8">
+    <title>login</title>
+</head>
+<body style="background-image: url(public/img/bg.jpg)">
+<div class="container" style="text-align: center">
+    <div class="content">
+        <form id="loginForm" class="form-group" action="doLogin" method="post">
+            <div class="row">
+                <span style="color: #abdde5;font-size: medium">用户登录</span>
+            </div>
+            <hr style="border-color: #ffe8a1"/>
+            <div th:if="${loginError}" class="alert-warning">用户名或密码错误</div>
+            <div class="row">
+                <div class="col-md-1"></div>
+                <label class="col-md-3 label">用户名：</label>
+                <input class="col-md-6 form-control " type="text" name="username" required="required"/>
+            </div>
+            <div class="row">
+                <div class="col-md-1"></div>
+                <label class="col-md-3 label">密&nbsp;&nbsp;&nbsp;&nbsp;码：</label>
+                <input class="col-md-6 form-control " type="password" name="password" required="required"/>
+            </div>
+<!--            <div class="row">-->
+<!--                <div class="col-md-1"></div>-->
+<!--                <label class="col-md-3 label">验证码：</label>-->
+<!--                <input class="col-md-3 form-control " type="text" name="checkcode"/>-->
+<!--                <input class="col-md-3 form-control " type="text"/>-->
+<!--            </div>-->
+            <div class="row">
+                <div class="col-md-3"></div>
+                <input class="btn btn-primary form-control col-md-3" type="submit" value="登录"/>
+                <input class="btn btn-primary form-control col-md-3" type="reset" value="重置"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript" th:src="@{/plugin/jquery/jquery.js}"></script>
+<script type="text/javascript" th:src="@{/plugin/bootstrap/js/bootstrap.js}"></script>
+</body>
+</html>

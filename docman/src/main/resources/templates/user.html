@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" th:href="@{/public/favicon.ico}" type="image/x-icon">
+    <link rel="stylesheet" th:href="@{/plugin/bootstrap/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/plugin/bootstrap-table/bootstrap-table.css}">
+    <link rel="stylesheet" th:href="@{/plugin/sweetalert2/sweetalert2.css}">
+    <link rel="stylesheet" th:href="@{/public/css/demo.css}">
+    <title>DocMan</title>
+</head>
+<body style="background-image: url(public/img/bg.jpg)">
+<div class="loader"></div>
+<div th:insert="~{main :: header}"></div>
+
+<div class="container">
+    <div style="margin-top: 1.5rem;">
+        <div class="row">
+            <form class="form-group " style="width: 100%;">
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-3 form-inline">
+                        <label class="label" for="_name">姓名：</label>
+                        <input class="form-control" type="text" id="_name" name="name" placeholder="请输入姓名"/>
+                    </div>
+                    <div class="col-md-4 form-inline">
+                        <label class="label" for="_username">用户名：</label>
+                        <input class="form-control" type="text" id="_username" name="username" placeholder="请输入用户名"/>
+                    </div>
+                    <input type="button" class="btn btn-light col-md-1" onclick="search()" value="搜索"/>
+                </div>
+            </form>
+            <br>
+            <div class="btn-group" style="margin-top: 0.5rem;margin-bottom: 0.5rem">
+                <button class="btn btn-dark btn-outline-light" onclick="add()">新增</button>
+                <button class="btn btn-dark btn-outline-light" onclick="modify()">修改</button>
+                <button class="btn btn-dark btn-outline-light" onclick="remove()">删除</button>
+            </div>
+            <table class="table table-sm" id="table" style="width: 70rem;"></table>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="userInfo" class="modal fade" id="userModal" data-backdrop="static" tabindex="-1" role="dialog"
+     aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form id="userForm" role="form" method="post">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">新增/修改用戶</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row form-inline">
+                        <div class="col-md-2"></div>
+                        <label class="label" for="username" style="color: black">&nbsp;&nbsp;&nbsp;用户名：</label>
+                        <input class="form-control" type="text" name="username" id="username">
+                        <input class="form-control" type="hidden" name="id" id="id">
+                    </div>
+                    <div class="row form-inline">
+                        <div class="col-md-2"></div>
+                        <label class="label" for="password" style="color: black">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;密码：</label>
+                        <input class="form-control" type="password" name="password" id="password">
+                    </div>
+                    <div class="row form-inline">
+                        <div class="col-md-2"></div>
+                        <label class="label" for="name" style="color: black">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓名：</label>
+                        <input class="form-control" type="text" name="name" id="name">
+                    </div>
+                    <div class="row form-inline">
+                        <div class="col-md-2"></div>
+                        <label class="label" for="department" style="color: black">所属部门：</label>
+                        <input class="form-control" type="text" name="department" id="department">
+                    </div>
+                    <div class="row form-inline">
+                        <div class="col-md-2"></div>
+                        <label class="label" for="level" style="color: black">用户等级：</label>
+                        <select id="level" class="form-control" name="level">
+                            <option value="0">普通用户</option>
+                            <option value="1">高级用户</option>
+                        </select>
+                    </div>
+                    <div class="row form-inline">
+                        <div class="col-md-2"></div>
+                        <label class="label" for="contact" style="color: black">联系电话：</label>
+                        <input class="form-control" type="text" name="contact" id="contact">
+                    </div>
+                    <div class="row form-inline">
+                        <div class="col-md-2"></div>
+                        <label class="label" for="remark" style="color: black">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;备注：</label>
+                        <textarea class="text-area form-control" name="remark" id="remark"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-primary btn-save-user" value="确定">
+                    <input type="reset" class="btn btn-secondary" value="重置">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<footer th:insert="~{main :: footer}"></footer>
+<script type="text/javascript" th:src="@{/plugin/jquery/jquery.js}"></script>
+<script type="text/javascript" th:src="@{/plugin/bootstrap/js/bootstrap.js}"></script>
+<script type="text/javascript" th:src="@{/plugin/bootstrap/js/bootstrap.bundle.js}"></script>
+<script type="text/javascript" th:src="@{/plugin/bootstrap-table/bootstrap-table.js}"></script>
+<script type="text/javascript" th:src="@{/plugin/bootstrap-table/bootstrap-table-locale-all.js}"></script>
+<script type="text/javascript" th:src="@{/plugin/sweetalert2/sweetalert2.js}"></script>
+<script type="text/javascript" th:src="@{/public/js/tools.js}"></script>
+<script type="text/javascript" th:src="@{/public/js/user.js}"></script>
+<script type="text/javascript" th:src="@{/public/js/userCenter.js}"></script>
+<script type="text/javascript">
+    $('.dropdown-toggle').dropdown();
+</script>
+</body>
+</html>

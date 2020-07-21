@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" th:href="@{/public/favicon.ico}" type="image/x-icon">
+    <link rel="stylesheet" th:href="@{/plugin/bootstrap/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/plugin/bootstrap-table/bootstrap-table.css}">
+    <link rel="stylesheet" th:href="@{/plugin/sweetalert2/sweetalert2.css}">
+    <link rel="stylesheet" th:href="@{/public/css/demo.css}">
+    <title>DocMan</title>
+</head>
+<body style="background-image: url(public/img/bg.jpg)">
+<div class="loader"></div>
+<header th:fragment="header">
+    <div class="row" style="margin: 0">
+        <div class="col float-left">
+            <h3><a href="main" style="text-decoration: none">枫林文档管理系统</a> </h3>
+        </div>
+        <nav class="col">
+            <ul class="nav float-right">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">
+                        欢迎，
+                        <span th:text="${currentUser.username}"></span>
+                    </a>
+                    <div class="dropdown-menu" role="menu">
+                        <a class="dropdown-item" href="javascript:void(0)" onclick="showUserDetail()">个人中心</a>
+                        <a class="dropdown-item" href="logout">退出登录</a>
+                    </div>
+                </li>
+                <li th:if="${currentUser.username=='admin'}" class="nav-item">
+                    <a class="nav-link" href="user">用户管理</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="docs">文档管理</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<div th:insert="~{user :: userInfo}"></div>
+
+<div class="container">
+    <div style="margin-top: 1.5rem;">
+        <div class="row">
+            <form class="form-group align-content-center" style="width: 100%;">
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-5">
+                        <input class="form-control rounded-pill" type="text" id="keyword" placeholder="请输入名称或关键字"/>
+                    </div>
+                    <input type="button" class="btn btn-success col-md-1 rounded-pill" onclick="search()" value="搜索"/>
+                </div>
+            </form>
+            <table class="table" id="table" style="width: 70rem;color: white;margin-top: 1rem"></table>
+        </div>
+    </div>
+</div>
+
+<footer th:fragment="footer">
+    <div class="row align-content-center" style="text-align: center">
+        <div class="col" style="padding: 0.5rem;color: white">
+            <h5>&copy;DocMan &laquo;Fenglin-2020-03-09&raquo;</h5>
+        </div>
+    </div>
+</footer>
+<script type="text/javascript" th:src="@{/plugin/jquery/jquery.js}"></script>
+<script type="text/javascript" th:src="@{/plugin/bootstrap/js/bootstrap.js}"></script>
+<script type="text/javascript" th:src="@{/plugin/bootstrap/js/bootstrap.bundle.js}"></script>
+<script type="text/javascript" th:src="@{/plugin/bootstrap-table/bootstrap-table.js}"></script>
+<script type="text/javascript" th:src="@{/plugin/bootstrap-table/bootstrap-table-locale-all.js}"></script>
+<script type="text/javascript" th:src="@{/plugin/sweetalert2/sweetalert2.js}"></script>
+<script type="text/javascript" th:src="@{/public/js/tools.js}"></script>
+<script type="text/javascript" th:src="@{/public/js/home.js}"></script>
+<script type="text/javascript" th:src="@{/public/js/userCenter.js}"></script>
+<script type="text/javascript">
+    $('.dropdown-toggle').dropdown();
+    const username = '[[${currentUser.username}]]';
+</script>
+</body>
+</html>

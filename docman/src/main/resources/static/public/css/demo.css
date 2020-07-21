@@ -1,0 +1,38 @@
+.loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    overflow: hidden !important;
+    z-index: 99999;
+    display: none;
+}
+header{
+    position:relative;
+    z-index: 0;
+    background-color:#000;
+    color: white
+}
+footer {
+    position: fixed;
+    background: #000;
+    bottom: 0;
+    width: -webkit-fill-available ;
+}
+h3{
+    font-family: serif;
+    font-weight: bolder;
+    display: block;
+    margin: 5px 20px
+}
+label{
+    color: white;
+    font-weight: bold;
+}
+.form-control {
+    margin-top: 5px;
+}

@@ -1,0 +1,37 @@
+server:
+  servlet:
+    context-path: /docman
+    session:
+      timeout: 60
+  port: 8081
+
+spring:
+# h2 数据库
+#  datasource:
+#    username: admin
+#    password: admin
+#    platform: h2
+#    url: jdbc:h2:~/.h2/docman
+#    driver-class-name: org.h2.Driver
+#  h2:
+#    console:
+#      enabled: true
+#      path: /h2-console
+# mysql数据库
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost:3306/docman?serverTimezone=UTC&characterEncoding=UTF8&useSSL=false
+    driver-class-name: com.mysql.jdbc.Driver
+  thymeleaf:
+    suffix: .html
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+
+defalut-save-file-directory: D:/docman/

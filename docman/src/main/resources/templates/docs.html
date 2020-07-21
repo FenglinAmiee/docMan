@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" th:href="@{/public/favicon.ico}" type="image/x-icon">
+    <link rel="stylesheet" th:href="@{/plugin/bootstrap/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/plugin/bootstrap-table/bootstrap-table.css}">
+    <link rel="stylesheet" th:href="@{/plugin/bootstrap-fileinput/css/fileinput.css}">
+    <link rel="stylesheet" th:href="@{/plugin/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css}">
+    <link rel="stylesheet" th:href="@{/plugin/sweetalert2/sweetalert2.css}">
+    <link rel="stylesheet" th:href="@{/public/css/demo.css}">
+    <style>
+        .form-control {
+            margin-top: 5px;
+        }
+
+        .btn-files {
+            height: 38px;
+            margin-top: 5px;
+            padding: 7px;
+        }
+    </style>
+    <title>DocMan</title>
+</head>
+<body style="background-image: url(public/img/bg.jpg)">
+<div class="loader"></div>
+<header th:insert="~{main :: header}"></header>
+
+<div class="container">
+    <div style="margin-top: 1.5rem;">
+        <div class="row">
+            <form class="form-group " style="width: 100%;">
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-5">
+                        <input class="form-control rounded-pill" type="text" id="_keyword" placeholder="请输入名称或关键字"/>
+                    </div>
+                    <input type="button" class="btn btn-primary col-md-1 rounded-pill" onclick="search()" value="搜索"/>
+                </div>
+            </form>
+            <br>
+            <div class="btn-group" style="margin-top: 0.5rem;margin-bottom: 0.5rem">
+                <button class="btn btn-dark btn-outline-light" onclick="add()">&nbsp;&nbsp;&nbsp;&nbsp;新增&nbsp;&nbsp;&nbsp;&nbsp;</button>
+                <button class="btn btn-dark btn-outline-light" onclick="modify()">&nbsp;&nbsp;&nbsp;&nbsp;修改&nbsp;&nbsp;&nbsp;&nbsp;</button>
+                <button class="btn btn-dark btn-outline-light" onclick="remove()">&nbsp;&nbsp;&nbsp;&nbsp;删除&nbsp;&nbsp;&nbsp;&nbsp;</button>
+                <button class="btn btn-dark btn-outline-light" onclick="preview()">&nbsp;&nbsp;&nbsp;&nbsp;预览&nbsp;&nbsp;&nbsp;&nbsp;</button>
+                <button class="btn btn-dark btn-outline-light" onclick="download()">&nbsp;&nbsp;&nbsp;&nbsp;下载&nbsp;&nbsp;&nbsp;&nbsp;</button>
+            </div>
+            <table class="table table-sm" id="table" style="width: 70rem;"></table>
+        </div>
+    </div>
+</div>
+
+<div th:insert="~{user :: userInfo}"></div>
+<div class="modal fade" id="docsModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modalTitle"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form id="docsForm" role="form" method="post">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">新增/修改文档</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row form-inline">
+                        <div class="col-md-1"></div>
+                        <label class="label" for="name" style="color: black">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名称：</label>
+                        <input class="form-control" type="text" name="name" id="name">
+                        <input class="form-control" type="hidden" name="id" id="id">
+                    </div>
+                    <div class="row form-inline">
+                        <div class="col-md-1"></div>
+                        <label class="label" for="keyword" style="color: black">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关键字：</label>
+                        <input class="form-control" type="text" name="keyword" id="keyword" placeholder="多个关键字以空格分隔">
+                    </div>
+                    <div class="row form-inline">
+                        <div class="col-md-1"></div>
+                        <label class="label" for="publisher" style="color: black">发布人/单位：</label>
+                        <input class="form-control" type="text" name="publisher" id="publisher">
+                    </div>
+                    <div class="row form-inline">
+                        <div class="col-md-1"></div>
+                        <label class="label" for="level" style="color: black">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;文件级别：</label>
+                        <select id="level" class="form-control" name="level">
+                            <option value="0">公开</option>
+                            <option value="1">非公开</option>
+                        </select>
+                    </div>
+                    <div class="row form-inline">
+                        <div class="col-md-1"></div>
+                        <label class="label" for="affectDate" style="color: black">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;发布时间：</label>
+                        <input class="form-control" type="text" name="affectDate" readonly="readonly" id="affectDate">
+                    </div>
+                    <div class="row form-inline">
+                        <div class="col-md-1"></div>
+                        <label class="label" for="remark" style="color: black">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;备注：</label>
+                        <textarea class="text-area form-control" name="remark" id="remark"></textarea>
+                    </div>
+                    <div class="row form-inline">
+                        <div class="col-md-1"></div>
+                        <label class="label" for="remark" style="color: black">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;附件：</label>
+                        <input class="form-control" name="files" type="file" id="files">
+                        <input name="path" id="path" type="hidden">
+                        <input name="realName" id="realName" type="hidden">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-primary" onclick="save()" value="确定">
+                    <input type="reset" class="btn btn-secondary" value="重置">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<footer th:insert="~{main :: footer}"></footer>
+<script type="text/javascript" th:src="@{/plugin/jquery/jquery.js}"></script>
+<script type="text/javascript" th:src="@{/plugin/bootstrap/js/bootstrap.js}"></script>
+<script type="text/javascript" th:src="@{/plugin/bootstrap/js/bootstrap.bundle.js}"></script>
+<script type="text/javascript" th:src="@{/plugin/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js}"></script>
+<script type="text/javascript" th:src="@{/plugin/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js}"></script>
+<script type="text/javascript" th:src="@{/plugin/bootstrap-fileinput/js/fileinput.js}"></script>
+<script type="text/javascript" th:src="@{/plugin/bootstrap-fileinput/js/locales/zh.js}"></script>
+<script type="text/javascript" th:src="@{/plugin/bootstrap-table/bootstrap-table.js}"></script>
+<script type="text/javascript" th:src="@{/plugin/bootstrap-table/bootstrap-table-locale-all.js}"></script>
+<script type="text/javascript" th:src="@{/plugin/sweetalert2/sweetalert2.js}"></script>
+<script type="text/javascript" th:src="@{/public/js/tools.js}"></script>
+<script type="text/javascript" th:src="@{/public/js/docs.js}"></script>
+<script type="text/javascript" th:src="@{/public/js/userCenter.js}"></script>
+<script type="text/javascript">
+    $('.dropdown-toggle').dropdown();
+    const username = '[[${currentUser.username}]]';
+</script>
+</body>
+</html>
